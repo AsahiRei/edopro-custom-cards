@@ -1,4 +1,4 @@
---SZS - X-Drive Tsubasa
+--SZS - X-Drive Maria
 --scripted by AsahiRei
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.splimitcon)
 	e1:SetTargetRange(0,1)
 	e1:SetTarget(s.splimit)
 	c:RegisterEffect(e1)
@@ -25,17 +24,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SZS}
-function s.splimitcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
 function s.cfilter(c)
-	return c:IsSetCard(SET_SZS) and c:IsType(TYPE_XYZ+TYPE_SYNCHRO)
+	return c:IsSetCard(SET_SZS) and c:IsType(TYPE_XYZ|TYPE_SYNCHRO)
 end
 function s.splimit(e,c)
-	local og=Duel.GetMatchingGroup(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,nil)
-	local cg=Duel.GetMatchingGroup(s.cfilter,c:GetControler(),LOCATION_MZONE,0,e:GetHandler())
-	if #og==#cg then return true end
-	return false
+	local tp=c:GetControler()
+	local og=Duel.GetMatchingGroupCount(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local cg=Duel.GetMatchingGroupCount(s.cfilter,tp,0,LOCATION_MZONE,nil)
+	return og==cg
 end
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(SET_SZS,scard,sumtype,tp)
