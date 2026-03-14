@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SETCARD_YUYUYU}
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsSetCard(SETCARD_YUYUYU) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsSetCard(SETCARD_YUYUYU) and c:IsAbleToDeck() and c:IsLevel(6) and c:IsRitualMonster()
         and ((c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()) or c:IsLocation(LOCATION_GRAVE+LOCATION_MZONE))
 end
 function s.spfilter(c,e,tp)

@@ -55,10 +55,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetTarget(s.splimit)
 	e4:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e4,tp)
-	YuYuYu.RitualOperation(e,tp,6,LOCATION_HAND+LOCATION_EXTRA,false)
-	if YuYuYu.RitualCheck(e,tp,6,LOCATION_HAND+LOCATION_EXTRA,false) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.BreakEffect()
+	local count=0
+	while count<2 and YuYuYu.RitualCheck(e,tp,6,LOCATION_HAND+LOCATION_EXTRA,false) do
+		if count>0 and not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			break
+		end
 		YuYuYu.RitualOperation(e,tp,6,LOCATION_HAND+LOCATION_EXTRA,false)
+		count=count+1
 	end
 end
 function s.desfilter(c,fid)
